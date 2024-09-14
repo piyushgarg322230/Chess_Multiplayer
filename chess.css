@@ -31,7 +31,7 @@ body {
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
-    background-image: url("/img/garden.jpg");
+    background-image: url("./img/garden.jpg");
     background-size: cover;
     background-repeat: repeat;
     min-height: 100vh;
