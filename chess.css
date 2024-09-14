@@ -1,0 +1,833 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Baloo 2", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+
+}
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Disable right-click context menu */
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+body {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    background-image: url("/img/garden.jpg");
+    background-size: cover;
+    background-repeat: repeat;
+    min-height: 100vh;
+    z-index: -1; /* Ensure body is on top */
+    position: relative; /* Ensure body is positioned relatively */
+}
+
+
+#backgroundColor {
+    background-color: #000000ba;
+    width: 100%;
+    height: 100%; /* Or set a specific height */
+    position: absolute; /* Absolute positioning to overlay */
+    top: 0;
+    left: 0;
+    z-index: 0; /* Ensure div is on top of the body */
+}
+
+#resetBtn {
+    position: fixed;
+    border: 1px solid rgb(206 212 204);
+    background-color: rgb(206 212 204);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 2vw; /* 2% of viewport width */
+    top: 2vh;  /* 2% of viewport height */
+    opacity: 0;
+    width: 3.5vw;  /* Responsive width based on viewport width */
+    height: 3.5vw; /* Responsive height (same as width to maintain circular shape) */
+}
+
+@media (max-width: 768px) {
+    #resetBtn {
+        width: 6vw; /* Larger width for smaller screens */
+        height: 6vw;
+    }
+}
+
+@media (max-width: 480px) {
+    #resetBtn {
+        width: 8vw;
+        height: 8vw;
+    }
+}
+
+.popupBack {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(0, 0, 0, 0.5);    */
+     background-color: rgb(0 0 0 / 75%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.popupBack-content {
+    background-color: white;
+    padding: 5%;
+    /* Percentage padding */
+    border-radius: 10px;
+    /* Rounded corners */
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 85%;
+    /* Percentage width */
+    max-width: 500px;
+    /* Optional max-width */
+    height: auto;
+    /* Height will adjust according to content */
+}
+
+.popupBack-button {
+    background-color: #ddd;
+    color: black;
+    padding: 3%;
+    /* Percentage padding */
+    margin: 10% 0;
+    /* Percentage margins */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    /* Relative font size */
+    width: 100%;
+    /* Button takes full width of popupBack-content */
+}
+
+
+.board-container {
+    width: 600px;
+    max-width: 90%;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* .board-container {
+    width: 80vw;
+    max-width: 600px;
+    height: auto;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 768px) {
+    .board-container {
+        width: 90vw;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .board-container {
+        width: 95vw;
+        max-width: 300px;
+    }
+} */
+
+.semataries {
+    display: flex;
+    /* flex-direction: column; */
+    max-height: 100%;
+    /* Adjust as needed */
+    overflow-y: auto;
+    /* Scroll if content overflows */
+    /* If you don't want scrollbars, use overflow-y: hidden */
+}
+
+.sematary {
+    /* Adjust as needed */
+    display: flex;
+    flex-direction: column;
+    /* Add any specific styles for sematary items */
+}
+
+#blackSematary {
+    text-align: right;
+}
+
+#board {
+    aspect-ratio: 1 / 1;
+    margin: auto;
+    border: 0.4px #333 solid;
+}
+
+#board div div {
+    float: left;
+    width: calc(100% / 8);
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    /* border: rgb(160, 181, 129) solid .01cm; */
+}
+
+#board .even div:nth-child(even) {
+    background: rgb(235, 235, 208);
+}
+
+#board .even div:nth-child(odd) {
+    background: rgb(115, 149, 82);
+    /*621700*/
+}
+
+#board .odd div:nth-child(even) {
+    background: rgb(115, 149, 82);
+    /*621700*/
+}
+
+#board .odd div:nth-child(odd) {
+    background: rgb(235, 235, 208);
+}
+
+.animate {
+    animation: rotateBoard 1s ease-out;
+    animation-fill-mode: both;
+}
+
+@keyframes rotateBoard {
+    0% {
+        transform: rotateZ(0);
+    }
+
+    100% {
+        transform: rotateZ(-180deg);
+    }
+
+}
+
+.forward {
+    transform: rotateZ(-180deg);
+}
+
+.backward {
+    transform: rotateZ(0);
+}
+
+.animate-backward {
+    animation: rotateBoardBackward 1s ease-out;
+    animation-fill-mode: both;
+}
+
+@keyframes rotateBoardBackward {
+    0% {
+        transform: rotateZ(-180deg);
+    }
+
+    100% {
+        transform: rotateZ(0);
+    }
+
+}
+
+img.piece {
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+.allowed {
+    opacity: .8;
+    background: radial-gradient(#304bfb, #304bfb) !important;
+    border: 1px solid black !important;
+}
+
+
+
+.last-move {
+    /* background: #30b030 !important; */
+    background: rgb(189 203 68 / 100%) !important ;
+
+}
+
+.clicked-square {
+    background: rgb(247 246 136 / 100%) !important;
+
+}
+
+.sematary img {
+    transform: rotateZ(0);
+    width: 1.8rem;
+    height: 1.8rem;
+}
+
+#blackSematary div {
+    overflow-y: auto;
+    margin-bottom: 2px;
+}
+
+.scene {
+    position: relative;
+    opacity: 0;
+    display: none;
+    z-index: 1;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000000bf;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Centers button vertically */
+    z-index: -1;
+}
+
+
+.scene-content h2 {
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: white;
+}
+
+@media screen and (max-width: 600px) {
+    .scene-content h2 {
+        font-size: 2rem;
+    }
+}
+
+.show {
+    display: block !important;
+    animation: showMessage 0s ease-out;
+    animation-fill-mode: both;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes showMessage {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
+}
+
+#turn {
+    text-align: center;
+    font-size: 18px;
+}
+
+.winning-sign:first-letter {
+    text-transform: uppercase;
+}
+
+.flip-board {
+    padding: 10px 20px;
+    border-radius: 5px !important;
+    outline: 0;
+    background: #7f979e;
+    color: white;
+    border: 0;
+}
+
+
+input[type="radio"] {
+    display: none;
+}
+
+label {
+    background-color: rgb(112, 112, 112);
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8em;
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    font-size: 23px;
+}
+
+input[type="radio"]:checked+label {
+    background-color: #4189e0;
+    color: #ffffff;
+}
+
+.button {
+    background-color: rgb(112, 112, 112);
+    border-radius: 10px;
+    border: none;
+    color: white;
+    padding: 20px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.button:hover,
+label:hover {
+    background-color: rgb(160, 160, 160);
+}
+
+.button-big {
+    padding: 30px 60px;
+    font-size: 25px;
+}
+
+
+
+
+.scene-content {
+    margin-top: 15vh;
+    text-align: center;
+    padding: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.opponent-selection,
+.select-color-container {
+    margin-bottom: 50px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+label {
+    font-size: 1.2rem;
+}
+
+.start-game-container {
+    margin-top: 30px;
+}
+
+.button-big {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.button-big:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+
+
+.profile-icon1 {
+    border: none;
+    color: white;
+    padding: 2% 4%;
+    /* Adjust padding as a percentage of the parent container */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.8em;
+    /* Font size relative to the parent element */
+    margin: 1% 0.5%;
+    /* Adjust margin as a percentage */
+    cursor: pointer;
+    border-radius: 0.5em;
+    /* Border radius relative to font size */
+    box-shadow: 0 0.2em 0.5em rgba(0, 0, 0, 0.1);
+    /* Box shadow relative to font size */
+    transition: all 0.2s ease-in-out;
+    background-color: rgb(129, 197, 129);
+    position: absolute;
+    left: 0;
+    /* Position the left edge at 50% of the container's width */
+    /* transform: translateX(-50%); */
+    bottom: -8.1%
+}
+
+.profile-icon2 {
+    border: none;
+    color: white;
+    padding: 2% 4%;
+    /* Adjust padding as a percentage of the parent container */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.8em;
+    /* Font size relative to the parent element */
+    margin: 1% 0.5%;
+    /* Adjust margin as a percentage */
+    cursor: pointer;
+    border-radius: 0.5em;
+    /* Border radius relative to font size */
+    box-shadow: 0 0.2em 0.5em rgba(0, 0, 0, 0.1);
+    /* Box shadow relative to font size */
+    transition: all 0.2s ease-in-out;
+    background-color: rgb(129, 197, 129);
+    position: absolute;
+    right: 0;
+    /* Position the left edge at 50% of the container's width */
+    /* transform: translateX(-50%); */
+    /* Shift the element left by 50% of its own width */
+    top: -8.1%;
+    /* Maintain the top positioning if needed */
+}
+
+.popup {
+
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    /* Change to fixed for better responsiveness */
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    background-color: rgb(0 0 0 / 75%);
+    z-index: 10000;
+    top: 0;
+    left: 0;
+
+
+}
+
+.popup-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 5%;
+    /* Increased padding for better spacing */
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* position: relative; */
+    /* max-width: 80%; */
+    max-width: 600px;
+    /* Ensure it doesn't exceed viewport width */
+    /* max-height: 90%; */
+    /* Ensure it doesn't exceed viewport height */
+    overflow: auto;
+    /* Handle overflow within the popup */
+    /* width: 300px; */
+    width: 85%;
+
+    /* Default width */
+    /* height: 200px; */
+    height: auto;
+
+    /* Default height */
+
+
+
+
+}
+
+.popup-content p {
+    color: #8b5e5e;
+    font-size: 1.5em;
+    padding: 3%;
+    /* Percentage padding */
+    margin: 10% 0;
+    /* margin: 50px 0; */
+    /* Adjusted margins for smaller screens */
+}
+
+.close-btn {
+    background-color: #ddd;
+    color: black;
+    /* padding: 10px 20px; */
+    padding: 3%;
+    /* Percentage padding */
+    margin: 10% 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background-color: #333;
+}
+
+/* Loader styles */
+.loader {
+    /* border: 16px solid #f3f3f3; */
+    /* Light grey */
+    /* border-top: 16px solid #3498db; */
+    /* Blue */
+    /* border-radius: 50%; */
+    /* width: 120px; */
+    /* height: 120px; */
+    font-size: 1.8em;
+    position: fixed;
+    color: white;
+    /* top: 50%;
+    left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    /* animation: spin 1.5s linear infinite; */
+    z-index: 1000;
+    /* Ensure it is above other content */
+    display: none;
+    /* Hide loader initially */
+}
+
+
+#loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 70%);
+    /* Dark transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Ensure it is above other content */
+    display: none;
+    /* Initially hide the loader */
+}
+
+
+/* Full screen white background during loading */
+
+/* Show loader when body has 'loading' class */
+.loader-container,
+.loader {
+    display: block;
+}
+
+
+
+
+
+
+.profile-container1 {
+    position: relative;
+    /* Ensure the container is positioned relative to its normal flow */
+    display: flex;
+    align-items: center;
+    padding: 0.3em;
+    /* Use viewport-based padding */
+    /* background-color: #3A3A3A; */
+    border-radius: 8px;
+    width: 100%;
+    /* Use full width of the container */
+    flex-wrap: wrap;
+    /* Automatically wrap children on smaller screens */
+    /* Offset from the top */
+    transform: translateY(-10%);
+    /* Adjust the position by -20% */
+
+    gap: 2%;
+}
+
+
+
+.profile-container {
+    position: relative;
+    /* Ensure the container is positioned relative to its normal flow */
+    display: flex;
+    align-items: center;
+    padding: 0.3em;
+    /* Use viewport-based padding */
+    /* background-color: #3A3A3A; */
+    border-radius: 8px;
+    width: 100%;
+    /* Use full width of the container */
+    flex-wrap: wrap;
+    /* Automatically wrap children on smaller screens */
+    top: -20%;
+    /* Offset from the top */
+    transform: translateY(10%);
+    /* Adjust the position by -20% */
+
+    gap: 2%;
+}
+
+/* .profile-icon img {
+    width: 10vw;
+ 
+    height: auto;
+
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    margin-right: 3vw;
+
+} */
+
+.profile-icon img {
+    width: 100%; /* Scale image to fill the container */
+    height: 100%; /* Scale image to fill the container */
+    object-fit: cover; /* Ensure the image covers the container without distortion */
+}
+
+.profile-icon {
+    width: 2.5em; /* Width relative to viewport width */
+    height: 2.5em; /* Height relative to viewport width */
+    display: flex;
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    overflow: hidden; /* Hide overflow if content is larger */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    align-items: flex-start; /* Align items to the start */
+    margin: 0; /* Reset margin */
+    padding: 0; /* Reset padding */
+    gap: 0px;
+}
+
+.profile-name {
+    font-size: 1em;
+    font-weight: bold;
+    /* margin-bottom: 1vw; */
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+}
+
+.chess-pieces {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0; /* Reset margin */
+    padding: 0; /* Reset padding */
+    
+}
+
+.chess-pieces img {
+    width: 1.4em;
+    height: 1.4em;
+    /* opacity: 0.5; */
+}
+
+.red-box {
+    background-color: red;
+    width: 12px;
+    height: 12px;
+    display: flex;
+    border-radius: 50%;
+    transform: translateX(30%);
+
+}
+
+
+@media (max-width: 768px) {
+    .scene-content {
+        padding: 1rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    label {
+        font-size: 1rem;
+    }
+
+    .button-big {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .profile-icon1 {
+        bottom: -12%
+    }
+
+    .profile-icon2 {
+        top: -12%;
+    }
+}
+
+@media (max-width: 480px) {
+    .scene-content {
+        padding: 0.5rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    .button-big {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .profile-icon1 {
+        bottom: -12%
+    }
+
+    .profile-icon2 {
+        top: -12%;
+    }
+}
+
+.dotePostion {
+    background-color: #00000033 !important;
+    border-radius: 50%;
+    min-width: 50%;             /* Minimum width relative to the parent */
+    min-height: 50%;            /* Minimum height relative to the parent */
+    transform: translate(50%, 50%);
+    z-index: 500; 
+}
